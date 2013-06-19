@@ -7,17 +7,19 @@ define('BASE', realpath('.').DIRECTORY_SEPARATOR);
 
 
 $uri = trim(str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['PHP_SELF']), '/');
-$segments = strpos($uri, '/') !== false
-                ? explode('/', $uri)
-                : array(
-                    0 => $uri
-                );
+$segments = $uri != ""
+                ? strpos($uri, '/') !== false
+                    ? explode('/', $uri)
+                    : array(
+                        0 => $uri
+                    )
+                : array();
 
 
 /**
  * Example code
  */
-$route = function ($segments) {
+$route = function (array $segments) {
 
     /**
      * Here is it about all you wanna do, basically this closure gets executed
@@ -33,6 +35,9 @@ $route = function ($segments) {
     /**
      * example route
      */
+    if (count($segments) == 0) {
+        return;
+    }
 
     /**
      * Only 1 segment? load php file
